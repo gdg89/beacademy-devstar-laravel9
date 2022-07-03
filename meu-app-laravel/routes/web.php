@@ -24,7 +24,7 @@ Route::get('/', function(){
 
 Route::get('/users',[UserController::class,'index'])->name('user.index');
 
-Route::get('users/{id}', [UserController::class, 'show'])->name('users.show');
+Route::get('users/{id}', [UserController::class, 'show'])->name('user.show');
 
 
 //via cep web service

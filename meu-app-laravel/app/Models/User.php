@@ -17,6 +17,8 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    
+     // Definimos que atributo son reescribibles en la tabla utilizando el $fillable
     protected $fillable = [
         'name',
         'email',
