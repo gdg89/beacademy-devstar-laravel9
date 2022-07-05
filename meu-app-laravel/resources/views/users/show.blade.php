@@ -1,9 +1,9 @@
 @extends('template.users')
-@section('title','Usuario '. $user -> name)
+@section('title', $title)
 @section('body')
 <body class="p-4">
     <h1>Usuario {{$user -> name}}</h1>
-    <p><a href="{{route('user.index')}}">Voltar</a></p>
+    <p><a href="{{route('users.index')}}">Voltar</a></p>
     <table class="table table-success table-striped w-50 mt-5">
         <thead>
             <tr>
@@ -28,6 +28,4 @@
             </tr>
         </tbody>
     </table>
-    
-</body>
-</html>
+@endsection
