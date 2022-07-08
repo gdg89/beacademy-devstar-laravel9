@@ -72,7 +72,7 @@ class UserController extends Controller
         return view('users.edit',compact('user'));
     }
 
-
+    
     public function update(Request $request, $id)
     {
         if(!$user= $this->model->find($id)){// si el request no encontrar usuario redirecciona al index
@@ -87,6 +87,17 @@ class UserController extends Controller
         $user->update($data);//modificando las informaciones del user, enviando las info atribuidas al data.
 
         return redirect()->route('users.show', $user->id);// redireccionando al usuario modificado, pasando la view y el id.
+    }
+
+    public function destroy($id)
+    {
+        if(!$user= $this->model->find($id)){// si el request no encontrar usuario redirecciona al index
+            return redirect()->route('users.index');
+        }
+
+        $user->delete();
+        return redirect()->route('users.index');
+
     }
 
 }

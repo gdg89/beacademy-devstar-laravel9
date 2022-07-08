@@ -22,9 +22,16 @@
                 <td>{{ $user->email }}</td>
                 <td>{{ date('d/m/Y - H:i', strtotime($user->created_at)) }}</td>
                 <td class="text-center">
-                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Editar</a>
-                    <a href="" class="btn btn-danger">Deletar</a>
+                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Editar</a></td>
+                <td>
+                    <form action="{{ route('users.destroy', $user->id) }}" method="POST" >
+                        @method('DELETE')
+                        @csrf
+
+                        <button type="submit" class="btn btn-danger">Deletar</button>
+                    </form>
                 </td>
+                    
             </tr>
         </tbody>
     </table>
