@@ -14,13 +14,13 @@ class UserController extends Controller
     {
         $this->model = $user;
     }
-    public function index()
+    public function index()//exibiendo todos os usuarios na tela.
     {
         $users = User::all();// llamada da tabela do model User
         return view ('users.index', compact('users')); //pasamos el nome da variavel no comando compact, y el sera renderizado en la view.
     }
 
-    public function show($id)
+    public function show($id)//exibiendo usuario na tela
     {
         //$user = User::find($id);//buscando en el banco de dados;
         
@@ -30,7 +30,7 @@ class UserController extends Controller
             return redirect()->route('users.index');//Se nao achar o usuario vai redireccionar para a view index
         }
            
-         $title='Usuario '. $user->name;//titulo dinamico
+         $title='Usuario '. $user->name;//titulo dinamico// recupera nombre del model user.
         
         return view('users.show', compact('user','title'));  
     }
@@ -61,6 +61,32 @@ class UserController extends Controller
             $this-> model -> create($data);
 
             return redirect()->route('users.index');
+    }
+
+    public function edit($id)
+    {
+        if(!$user= $this->model->find($id)){
+            return redirect()->route('users.index');
+        }
+        
+        return view('users.edit',compact('user'));
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        if(!$user= $this->model->find($id)){// si el request no encontrar usuario redirecciona al index
+            return redirect()->route('users.index');
+        }
+        $data = $request-> only('name','email');// data recibe nombre e email del request
+
+        if($request-> password){//  se el request tiene password, data tambien recibe el password.
+            $data['password']= bcrypt($request->password);// tratando el password recibido.
+        }
+
+        $user->update($data);//modificando las informaciones del user, enviando las info atribuidas al data.
+
+        return redirect()->route('users.show', $user->id);// redireccionando al usuario modificado, pasando la view y el id.
     }
 
 }

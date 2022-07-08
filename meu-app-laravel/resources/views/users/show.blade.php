@@ -22,7 +22,7 @@
                 <td>{{ $user->email }}</td>
                 <td>{{ date('d/m/Y - H:i', strtotime($user->created_at)) }}</td>
                 <td class="text-center">
-                    <a href="" class="btn btn-warning">Editar</a>
+                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Editar</a>
                     <a href="" class="btn btn-danger">Deletar</a>
                 </td>
             </tr>
