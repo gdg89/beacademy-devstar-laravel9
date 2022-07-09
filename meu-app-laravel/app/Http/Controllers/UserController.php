@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Requests\StoreUpdateUserFormRequest;
 
 
 
@@ -43,7 +44,7 @@ class UserController extends Controller
     }
 
 
-    public function store(Request $request)//criando request do formulario
+    public function store(StoreUpdateUserFormRequest $request)//criando request do formulario
     {
         //enviando para o banco
          // forma 1:
@@ -73,7 +74,7 @@ class UserController extends Controller
     }
 
     
-    public function update(Request $request, $id)
+    public function update(StoreUpdateUserFormRequest  $request, $id)
     {
         if(!$user= $this->model->find($id)){// si el request no encontrar usuario redirecciona al index
             return redirect()->route('users.index');
@@ -96,6 +97,7 @@ class UserController extends Controller
         }
 
         $user->delete();
+        
         return redirect()->route('users.index');
 
     }

@@ -4,6 +4,13 @@
 
 <center>
     <h1> Novo Usuario</h1>
+    @if ($errors->any()){
+        <div class="alert alert-danger" role="alert">
+            @foreach($errors->all() as $error)<!--llamando todo los erros para exibir en el alert con $errors->all() -->
+                {{$error }}
+            @endforeach
+        </div>
+    @endif
 
     <form class="w-25" action="{{ route('users.store') }}" method="POST"><!--Defino a rota no action="" -->
     @csrf
