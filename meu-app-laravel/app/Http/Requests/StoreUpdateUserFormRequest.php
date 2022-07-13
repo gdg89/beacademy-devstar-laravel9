@@ -31,21 +31,19 @@ class StoreUpdateUserFormRequest extends FormRequest
             'email',
             'unique:users,email,{$id},id'//email tiene que ser unico, pega del mmodel User,pega el {$id'} de la columna id de la tabla.(el id fue pasado en la primera linha del metodo)
           ],
-          'password'=>[
-            'required',
-            'min:4',
-            'max:12'
-          ]
+          'image'=>[
+            'file',
+            //mimes:jpeg,png.. // mimes type define el tipo de arquivo.
+          ],
+          'password'=>'required|min:4|max:12',
         ];
 
         if($this->method('PUT')){// si el metodo es PUT, tratar el password, el debe ser:
-            $rule['password']= [
-                'nulable',
-                'min:4',
-                'max:12'
+            $rules = [
+              'password'=> 'nullable|min:4|max:12',
+              'email'=> 'nullable|email',
             ];
-
-        };
+        }
         return $rules;
     }
 }

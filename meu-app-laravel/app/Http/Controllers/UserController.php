@@ -17,7 +17,8 @@ class UserController extends Controller
     }
     public function index()//exibiendo todos os usuarios na tela.
     {
-        $users = User::all();// llamada da tabela do model User
+        //$users = User::all();// llamada da tabela do model User
+        $users = User::paginate(5);
         return view ('users.index', compact('users')); //pasamos el nome da variavel no comando compact, y el sera renderizado en la view.
     }
 
@@ -46,6 +47,7 @@ class UserController extends Controller
 
     public function store(StoreUpdateUserFormRequest $request)//criando request do formulario
     {
+        
         //enviando para o banco
          // forma 1:
             // $user = new User;
@@ -59,6 +61,12 @@ class UserController extends Controller
             $data= $request->all();// data recebe tudo do request.
             $data['password'] =bcrypt($request->password);// se $data tiver password, tratamos com bcrypt.
 
+            if($request->image){//Se request tiver image rodar condição.
+                $file = $request['image']; //$file recebe na pocsição image, o $request na poscição image.
+            $path =$file->store('profile','public');// Salva o arquivo criando a pasta profile dentro da pasta public.(rodar comando php artisan storage:link)
+            $data['image']= $path;// salva no banco o camino gerado pelo store.
+            }
+            
             $this-> model -> create($data);
 
             return redirect()->route('users.index');

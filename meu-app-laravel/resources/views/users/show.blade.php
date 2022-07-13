@@ -10,6 +10,7 @@
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
+                <th scope="col">Image</th>
                 <th scope="col">Registration Date</th>
                 <th scope="col" colspan="2" class="text-center">Ações</th>
             </tr>
@@ -20,6 +21,11 @@
                 <th scope="row">{{ $user->id }}</th>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
+                @if($user->image)
+                <td><img src="{{asset( 'storage/'.$user->image) }}"  width="60px" heigth="60px" class="rounded-circle"></td>
+                @else
+                <td><img src="{{ asset( 'storage/profile/avatar.png') }}"  width="60px" heigth="60px" class="rounded-circle"></td>
+                @endif
                 <td>{{ date('d/m/Y - H:i', strtotime($user->created_at)) }}</td>
                 <td class="text-center">
                     <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Editar</a></td>

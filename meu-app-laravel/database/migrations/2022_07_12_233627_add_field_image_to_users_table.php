@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('adresses', function (Blueprint $table) {
-            $table->id();
-            $table->string('address');
-            $table->string('postal_code');
-            $table->string('city');
-            $table->string('country');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('image')->nullable()->after('name');//Cria uma nova coluna de nome image - ubicada depois da coluna name(after-name).
         });
     }
 
@@ -30,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('adress');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('image'); // caso de errado se aplica roll-back para deletar coluna.
+        });
     }
 };
