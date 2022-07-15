@@ -10,11 +10,15 @@ use App\Http\Requests\StoreUpdateUserFormRequest;
 
 
 class UserController extends Controller
+
 {
+    //MODEL CALL
     public function __construct(User $user)//llamando o model
     {
         $this->model = $user;
     }
+
+    // INDEX USER
     public function index()//exibiendo todos os usuarios na tela.
     {
         //$users = User::all();// llamada da tabela do model User
@@ -22,6 +26,7 @@ class UserController extends Controller
         return view ('users.index', compact('users')); //pasamos el nome da variavel no comando compact, y el sera renderizado en la view.
     }
 
+    //EXIBIR USUARIO INDIVIDUAL
     public function show($id)//exibiendo usuario na tela
     {
         //$user = User::find($id);//buscando en el banco de dados;
@@ -37,14 +42,14 @@ class UserController extends Controller
         return view('users.show', compact('user','title'));  
     }
 
-
+    //CRIAR USUARIO
     public function create()
     {
         
        return view('users.create');
     }
 
-
+    //RECUPERA DADOS DO FORM E ENVIA PRO DB
     public function store(StoreUpdateUserFormRequest $request)//criando request do formulario
     {
         
@@ -71,6 +76,9 @@ class UserController extends Controller
 
             return redirect()->route('users.index');
     }
+    
+    
+    //FORM MODIFICAR USUARIO
 
     public function edit($id)
     {
@@ -81,7 +89,7 @@ class UserController extends Controller
         return view('users.edit',compact('user'));
     }
 
-    
+    // MODIFICAR USUARIO DB
     public function update(StoreUpdateUserFormRequest  $request, $id)
     {
         if(!$user= $this->model->find($id)){// si el request no encontrar usuario redirecciona al index
@@ -97,7 +105,7 @@ class UserController extends Controller
 
         return redirect()->route('users.show', $user->id);// redireccionando al usuario modificado, pasando la view y el id.
     }
-
+    //ELIMINAR USUARIO
     public function destroy($id)
     {
         if(!$user= $this->model->find($id)){// si el request no encontrar usuario redirecciona al index

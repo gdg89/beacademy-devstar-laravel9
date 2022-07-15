@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\http\Controllers\{
     UserController,
+    PostController,
     ViaCepController
 };
 
@@ -21,6 +22,9 @@ use App\http\Controllers\{
 Route::get('/', function(){
     return view('welcome');
 });
+
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+Route::get('/users/{id}/posts',[PostController::class, 'show'])->name('posts.show');
 
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 Route::put('/users/{id}',[UserController::class, 'update'])->name('users.update');
