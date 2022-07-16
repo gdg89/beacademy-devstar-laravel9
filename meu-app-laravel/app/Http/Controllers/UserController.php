@@ -19,11 +19,17 @@ class UserController extends Controller
     }
 
     // INDEX USER
-    public function index()//exibiendo todos os usuarios na tela.
+    public function index(Request $request)//exibiendo todos os usuarios na tela.//recibimos un request.
     {
+        
         //$users = User::all();// llamada da tabela do model User
-        $users = User::paginate(5);
-        return view ('users.index', compact('users')); //pasamos el nome da variavel no comando compact, y el sera renderizado en la view.
+
+        //Se tiver uma psqeuisa de usuario, aplicar model getUsers.
+        $users = $this->model->getUsers(
+            $request->search??''//se tiver request aplicar search, senao fica vacio.
+        );
+      
+       return view ('users.index', compact('users')); //pasamos el nome da variavel no comando compact, y el sera renderizado en la view.
     }
 
     //EXIBIR USUARIO INDIVIDUAL
@@ -36,10 +42,14 @@ class UserController extends Controller
          if(!$user = User::find($id)){
             return redirect()->route('users.index');//Se nao achar o usuario vai redireccionar para a view index
         }
-           
-         $title='Usuario '. $user->name;//titulo dinamico// recupera nombre del model user.
+
+        $user->load('teams');//carregando o relacionamento, chamando o model teams.
+        $title='Usuario '. $user->name;//titulo dinamico// recupera nombre del model user.
         
-        return view('users.show', compact('user','title'));  
+        //  $team = Team::find(1);//relacionamento de cuantos usuarios con un team y cuantos teeams para un usuario.
+        //  $team->load('users');
+        //     return $team;
+         return view('users.show', compact('user','title'));  
     }
 
     //CRIAR USUARIO
