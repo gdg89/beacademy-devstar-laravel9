@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+
 use App\Models\User;
 use App\Models\Post;
+
 
 
 class PostController extends Controller
@@ -24,7 +25,8 @@ class PostController extends Controller
         //     return redirect()->back();
         // }
        
-        $posts = $this->posts()->all();
+        $posts = $this->post->all();
+    
 
         return view('posts.index', compact('posts'));
     }

@@ -11,6 +11,6 @@ class Post extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);//Relacionamento de muitos para um.
+        return $this->belongsTo(User::class);//Relacionamento de muitos posts para um usuario.
     }
 }
