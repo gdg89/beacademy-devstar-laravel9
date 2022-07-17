@@ -129,4 +129,10 @@ class UserController extends Controller
 
     }
 
+    //ADMIN
+    public function admin()
+    {
+        return view('admin.index');
+    }
+
 }

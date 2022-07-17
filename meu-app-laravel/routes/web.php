@@ -26,3 +26,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
 
 });
+
+Route::middleware(['auth','admin'])->group(function (){
+    Route::get('/admin',[UserController::class, 'admin'])->name('admin');
+});

@@ -13,11 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('teams', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->timestamps();
-        });
+        if(!Schema::hasTable('teams')){//condicional agragada por error "table already exist". caso contrario va el codigo dentro de la condicional.
+
+                Schema::create('teams', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->timestamps();
+            });
+        };
+        
         
         //Tabela pivot
         Schema::create('team_users', function (Blueprint $table){
