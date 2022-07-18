@@ -2,6 +2,7 @@
 @section('title', 'Listagem de Usuários')
 @section('body')
 
+<!-- Card do Dashboard -->
 <div class="card mt-5" style="width: 30rem;">
   <img src="{{ asset('storage/dashboard.jpg') }}" class="card-img-top" alt="Dashboard">
   <div class="card-body">

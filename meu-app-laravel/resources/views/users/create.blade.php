@@ -1,6 +1,7 @@
 @extends('template.users')
 @section('title','Novo Usuario')
 @section('body')
+        
 
 <center>
     <h1> Novo Usuario</h1>

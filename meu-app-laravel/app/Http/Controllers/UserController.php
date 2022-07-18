@@ -50,7 +50,7 @@ class UserController extends Controller
         //  $team = Team::find(1);//relacionamento de cuantos usuarios con un team y cuantos teeams para un usuario.
         //  $team->load('users');
         //     return $team;
-         return view('users.show', compact('user','title'));  
+         return view('users.show', compact('user','title'));  // redireccionando al usuario modificado, pasando la view y el id.
     }
 
     //CRIAR USUARIO
@@ -58,6 +58,7 @@ class UserController extends Controller
     {
         
        return view('users.create');
+       
     }
 
     //RECUPERA DADOS DO FORM E ENVIA PRO DB
@@ -84,8 +85,12 @@ class UserController extends Controller
             }
             
             $this-> model -> create($data);
-
+            
+            // PTION 1 - FLASH MESSAGE (OPTION 2 IN UPDATE METHOD)
+            $request-> session()->flash('create','Usuario cadastrado com susseso');// messagem susseso de cadastro.
             return redirect()->route('users.index');
+          
+           //return redirect()->route('users.index')->with('create','Usuario cadastrado com susseso');
     }
     
     
@@ -98,7 +103,10 @@ class UserController extends Controller
         }
         
         return view('users.edit',compact('user'));
+        
+           
     }
+
 
     // MODIFICAR USUARIO DB
     public function update(StoreUpdateUserFormRequest  $request, $id)
@@ -112,10 +120,14 @@ class UserController extends Controller
             $data['password']= bcrypt($request->password);// tratando el password recibido.
         }
 
+        $data['is_admin'] =$request->admin?1:0;//Verificando checkbox do formulario editar usuario.
         $user->update($data);//modificando las informaciones del user, enviando las info atribuidas al data.
 
-        return redirect()->route('users.show', $user->id);// redireccionando al usuario modificado, pasando la view y el id.
+        //return redirect()->route('users.show', $user->id);// redireccionando al usuario modificado, pasando la view y el id.
+        return redirect()->route('users.show', $user->id)->with('edit', 'Usuario atualizado com susseso.');
     }
+
+
     //ELIMINAR USUARIO
     public function destroy($id)
     {
@@ -125,7 +137,9 @@ class UserController extends Controller
 
         $user->delete();
         
-        return redirect()->route('users.index');
+        //return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('destroy','Usuario deletado com susseso.');
+       
 
     }
 

@@ -1,6 +1,13 @@
 @extends('template.users')
 @section('title', $title)
 @section('body')
+ <!-- message -->
+         @if(session()->has('edit'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Parabens!</strong> {{ session()->get('edit') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
 <div class=" container w-75 p-4 m-auto">
     <h1>Usuario {{$user -> name}}</h1>

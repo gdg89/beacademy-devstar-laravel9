@@ -2,7 +2,7 @@
 @section('title', "Usuario {$user->name}")
 @section('body')
 
-<center>
+
     <h1> Usuario {{$user->name}}</h1>
     @if ($errors->any())
         <div class="alert alert-danger" role="alert">
@@ -32,10 +32,16 @@
             <label for="image" class="form-label">Image</label>
             <input type="file" class="form-control" id="image" name="image">
         </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="admin" id="admin" value="1">
+            <label class="form-check-label" for="admin">
+                Administrador
+            </label>
+        </div>
         
         <button type="submit" class="btn btn-primary">Atualizar</button>
     </form>
-</center>
+
 
 
 
