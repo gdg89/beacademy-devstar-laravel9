@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Team;
 use App\Http\Requests\StoreUpdateUserFormRequest;
+use App\Exceptions\UserControllerException;
 
 
 
@@ -40,17 +42,28 @@ class UserController extends Controller
         
         // otra forma de busqeuda utilizando o eloquent -- $user = User::where('id',$id)->first();
 
-         if(!$user = User::find($id)){
-            return redirect()->route('users.index');//Se nao achar o usuario vai redireccionar para a view index
+        //  if(!$user = User::find($id)){
+        //      return redirect()->route('users.index');//Se nao achar o usuario vai redireccionar para a view index
+        // }
+
+        $user = User::find($id);//tratando error con findorFail para exivir view de error para el usuario.
+
+        if($user){
+            return view('users.show', compact('user'));
+        }else{
+            throw new UserControllerException('Usuario não encontrado.');
         }
 
-        $user->load('teams');//carregando o relacionamento, chamando o model teams.
+        //$user->load('teams');//carregando o relacionamento, chamando o model teams.
         $title='Usuario '. $user->name;//titulo dinamico// recupera nombre del model user.
+
+
         
-        //  $team = Team::find(1);//relacionamento de cuantos usuarios con un team y cuantos teeams para un usuario.
-        //  $team->load('users');
-        //     return $team;
-         return view('users.show', compact('user','title'));  // redireccionando al usuario modificado, pasando la view y el id.
+        
+          //$team = Team::find(1);//relacionamento de cuantos usuarios con un team y cuantos teeams para un usuario.
+        // $team->load('users');
+         //   return $team;
+        // return view('users.show', compact('user','title'));  // redireccionando al usuario modificado, pasando la view y el id.
     }
 
     //CRIAR USUARIO
